@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>SUPRA7X · Emote Master</title>
+  <!-- Tailwind + Font Awesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { font-family: 'Segoe UI', 'Tajawal', 'Poppins', sans-serif; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(-45deg, #0a0f1e, #141a2b, #1e1a2e, #2a1a2e);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #f1f5f9;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .glass {
+      background: rgba(10, 15, 30, 0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.7), 0 0 30px rgba(212, 175, 55, 0.1);
+    }
+    .gold-glow {
+      text-shadow: 0 0 15px #d4af37, 0 0 30px #b8860b;
+    }
+    .emote-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 10px;
+      max-height: 420px;
+      overflow-y: auto;
+      padding: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: #d4af37 #1e293b;
+    }
+    .emote-item {
+      background: rgba(30, 20, 50, 0.6);
+      border-radius: 20px;
+      padding: 8px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.2,0,0,1);
+      border: 2px solid transparent;
+      backdrop-filter: blur(4px);
+    }
+    .emote-item:hover {
+      border-color: #d4af37;
+      background: rgba(80, 40, 100, 0.7);
+      transform: scale(1.02);
+      box-shadow: 0 0 25px #d4af3740;
+    }
+    .emote-item img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: contain;
+      border-radius: 16px;
+      background: #0b0e1a;
+    }
+    .emote-item .fallback-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      aspect-ratio: 1/1;
+      background: #1a1f35;
+      border-radius: 16px;
+      color: #d4af37;
+      font-size: 28px;
+    }
+    .uid-badge {
+      background: #1e2a4a;
+      border: 1px solid #d4af3760;
+      border-radius: 40px;
+      padding: 6px 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 5px;
+      font-weight: 500;
+      color: #f0e6d2;
+      box-shadow: 0 4px 8px #00000030;
+    }
+    .btn-primary {
+      background: linear-gradient(145deg, #d4af37, #b8860b);
+      color: #0a0e1a;
+      font-weight: bold;
+      border: none;
+      transition: all 0.2s;
+      box-shadow: 0 8px 20px -5px #d4af3750;
+    }
+    .btn-primary:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 15px 25px -6px #d4af37; 
+      background: linear-gradient(145deg, #e6c14a, #c9a020);
+    }
+    .btn-secondary {
+      background: rgba(20, 30, 50, 0.6);
+      border: 1px solid #8b7a5a;
+      color: #f1e9d8;
+      backdrop-filter: blur(8px);
+    }
+    .btn-secondary:hover { background: rgba(60, 40, 80, 0.7); border-color: #d4af37; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1a1f35; border-radius: 12px; }
+    ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 12px; }
+    [dir="rtl"] { text-align: right; }
+    [dir="ltr"] { text-align: left; }
+  </style>
+</head>
+<body class="p-3 sm:p-4 md:p-6">
+
+<div class="max-w-7xl mx-auto">
+  <!-- الهيدر: شعار + روابط التواصل -->
+  <div class="flex flex-col items-center justify-center mb-6">
+    <div class="flex items-center gap-4 sm:gap-6">
+      <i class="fas fa-crown text-4xl sm:text-5xl text-[#d4af37] gold-glow"></i>
+      <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-wider">
+        <span class="text-[#e6c14a] gold-glow">SUPRA</span><span class="text-white drop-shadow-lg">7X</span>
+      </h1>
+      <i class="fas fa-crown text-4xl sm:text-5xl text-[#d4af37] gold-glow"></i>
+    </div>
+    <div class="flex flex-wrap items-center justify-center gap-3 mt-4">
+      <a href="https://t.me/kyoubey_777" target="_blank" class="glass px-4 py-2 rounded-full flex items-center gap-2 text-sm sm:text-base border border-[#d4af3740]">
+        <i class="fab fa-telegram text-blue-300 text-xl"></i>
+        <span class="font-medium">@kyoubey_777</span>
+      </a>
+      <a href="https://t.me/SUPRA7X" target="_blank" class="glass px-4 py-2 rounded-full flex items-center gap-2 text-sm sm:text-base border border-[#d4af3740]">
+        <i class="fab fa-telegram text-blue-300 text-xl"></i>
+        <span class="font-medium">@SUPRA7X</span>
+      </a>
+      <a href="https://www.tiktok.com/@.kyoubey.._.777" target="_blank" class="glass px-4 py-2 rounded-full flex items-center gap-2 text-sm sm:text-base border border-[#d4af3740]">
+        <i class="fab fa-tiktok text-pink-400 text-xl"></i>
+        <span class="font-medium">TikTok</span>
+      </a>
+      <a href="https://youtube.com/@itzkyoubey.__.777" target="_blank" class="glass px-4 py-2 rounded-full flex items-center gap-2 text-sm sm:text-base border border-[#d4af3740]">
+        <i class="fab fa-youtube text-red-400 text-xl"></i>
+        <span class="font-medium">YouTube</span>
+      </a>
+      <a href="https://www.instagram.com/kyoubey.__.77" target="_blank" class="glass px-4 py-2 rounded-full flex items-center gap-2 text-sm sm:text-base border border-[#d4af3740]">
+        <i class="fab fa-instagram text-purple-300 text-xl"></i>
+        <span class="font-medium">Instagram</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- صندوق التنبيهات -->
+  <div id="alertBox" class="hidden transition-all duration-300 mb-5 rounded-2xl p-4 text-sm font-medium border-l-4 shadow-xl"></div>
+
+  <!-- الشبكة الرئيسية -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- العمود الأيسر: الإعدادات -->
+    <div class="space-y-6">
+      <div class="glass rounded-3xl p-5">
+        <label class="block text-[#d4af37] text-sm font-semibold mb-2" id="labelTeamCode">
+          <i class="fas fa-door-open ml-2 text-[#d4af37]"></i>Room Code
+        </label>
+        <input type="text" id="teamCode" placeholder="e.g., ABCD12" inputmode="text" class="w-full bg-[#0b1120]/70 border border-[#d4af3760] rounded-2xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-[#d4af37] text-lg uppercase" maxlength="12">
+        <p class="text-xs text-gray-300 mt-2" id="descTeamCode">Required for emote</p>
+      </div>
+
+      <div class="glass rounded-3xl p-5">
+        <label class="block text-[#d4af37] text-sm font-semibold mb-3" id="labelUid">
+          <i class="fas fa-user-plus ml-2 text-[#d4af37]"></i>Add Players (UID)
+        </label>
+        <div class="flex gap-2">
+          <input type="text" id="uidInput" placeholder="e.g., 4715293379" inputmode="text" class="flex-1 bg-[#0b1120]/70 border border-[#d4af3760] rounded-2xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-[#d4af37]">
+          <button id="addUidBtn" class="btn-primary px-5 py-3 rounded-2xl text-base"><i class="fas fa-plus-circle"></i> Add</button>
+        </div>
+        <div class="mt-4 min-h-[60px]">
+          <div id="uidListContainer" class="flex flex-wrap gap-2"></div>
+        </div>
+        <p id="uidCountMessage" class="text-xs text-[#d4af37] mt-2"></p>
+      </div>
+
+      <div class="glass rounded-3xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <i class="fas fa-users-cog text-2xl text-[#d4af37]"></i>
+          <h3 class="text-xl font-bold text-[#f1e9d8]" id="squadTitle">Open Squad 5</h3>
+        </div>
+        <div class="flex gap-2">
+          <input type="text" id="squadUidInput" placeholder="Player UID" inputmode="text" class="flex-1 bg-[#0b1120]/70 border border-[#d4af3760] rounded-2xl px-4 py-3 text-white">
+          <button id="sendSquadBtn" class="btn-secondary px-5 py-3 rounded-2xl"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- العمود الأيمن: شبكة الإيموتات -->
+    <div class="lg:col-span-2">
+      <div class="glass rounded-3xl p-5 h-full flex flex-col">
+        <h3 class="text-xl font-bold text-[#d4af37] mb-3 flex items-center gap-2" id="emoteGridTitle">
+          <i class="fas fa-smile-wink"></i> Tap on emote to execute
+        </h3>
+        <input type="text" id="emoteSearch" placeholder="🔍 Search by ID..." class="w-full bg-[#0b1120]/70 border border-[#d4af3760] rounded-xl px-4 py-2.5 mb-4 text-sm focus:ring-2 focus:ring-[#d4af37] text-white">
+        <div id="emoteGrid" class="emote-grid flex-1"></div>
+        <p class="text-xs text-gray-300 mt-3" id="emoteHint"><i class="fas fa-info-circle"></i> Instant execution – ensure room code and players added</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8 text-center text-gray-400 text-sm flex justify-center gap-4">
+    <span>SUPRA7X © 2025</span>
+    <span>|</span>
+    <span id="apiStatusText">API Status: <span id="apiStatus" class="text-[#4ade80]">● Online</span></span>
+  </div>
+</div>
+
+<script>
+  (function(){
+    "use strict";
+
+    const API_BASE = 'http://212.227.7.153:11066';
+    const MAX_UIDS = 5;
+    const CDN_BASE = 'https://cdn.jsdelivr.net/gh/ShahGCreator/icon@main/PNG/';
+    const LOCAL_BASE = 'emotff/';
+    
+    const emoteIds = [
+      "909000001","909000002","909000003","909000004","909000005","909000006","909000007","909000008","909000009","909000010",
+      "909000011","909000012","909000013","909000014","909000015","909000016","909000017","909000018","909000019","909000020",
+      "909000021","909000022","909000023","909000024","909000025","909000026","909000027","909000028","909000029","909000031",
+      "909000032","909000033","909000034","909000036","909000037","909000038","909000039","909000040","909000041","909000042",
+      "909000043","909000044","909000045","909000046","909000047","909000048","909000049","909000051","909000052","909000053",
+      "909000054","909000055","909000056","909000057","909000058","909000059","909000060","909000061","909000062","909000063",
+      "909000064","909000065","909000066","909000067","909000068","909000069","909000070","909000071","909000072","909000073",
+      "909000074","909000075","909000076","909000077","909000078","909000079","909000080","909000081","909000082","909000083",
+      "909000084","909000085","909000086","909000087","909000088","909000089","909000090","909000091","909000092","909000093",
+      "909000094","909000095","909000096","909000097","909000098","909000099","909000121","909000123","909000124","909000125",
+      "909000126","909000127","909000128","909000129","909000130","909000131","909000132","909000133","909000134","909000135",
+      "909000136","909000137","909000138","909000139","909000140","909000141","909000144","909000145","909033001","909033002",
+      "909033003","909033004","909033005","909033006","909033007","909033008","909033009","909033010","909034001","909034002",
+      "909034003","909034004","909034005","909034006","909034007","909034008","909034009","909034010","909034011","909034012",
+      "909034013","909034014","909035001","909035005","909035006","909035007","909035008","909035009","909035010","909035011",
+      "909035012","909035013","909035014","909035015","909036001","909036002","909036003","909036004","909036005","909036006",
+      "909036008","909036009","909036010","909036011","909036012","909036014","909037001","909037002","909037003","909037004",
+      "909037005","909037006","909037007","909037008","909037009","909037010","909037011","909037012","909038001","909038003",
+      "909038004","909038005","909038006","909038008","909038009","909038010","909038011","909038012","909038013","909039001",
+      "909039002","909039003","909039004","909039005","909039006","909039007","909039008","909039009","909039010","909039011",
+      "909039012","909039013","909039014","909040001","909040002","909040003","909040004","909040005","909040006","909040008",
+      "909040009","909040010","909040011","909040012","909040013","909040014","909041001","909041002","909041003","909041004",
+      "909041005","909041006","909041007","909041008","909041009","909041010","909041011","909041012","909041013","909041014",
+      "909041015","909042001","909042002","909042003","909042004","909042005","909042006","909042007","909042008","909042009",
+      "909042011","909042012","909042013","909042016","909042017","909042018","909043001","909043002","909043003","909043004",
+      "909043005","909043006","909043007","909043008","909043009","909043010","909043013","909044001","909044002","909044003",
+      "909044004","909044005","909044006","909044007","909044008","909044009","909044010","909044011","909044012","909044015",
+      "909044016","909045001","909045002","909045003","909045004","909045005","909045006","909045007","909045008","909045009",
+      "909045010","909045011","909045012","909045015","909045016","909045017","909046001","909046002","909046003","909046004",
+      "909046005","909046006","909046007","909046008","909046009","909046010","909046011","909046012","909046013","909046014",
+      "909046015","909046016","909046017","909047001","909047002","909047003","909047004","909047005","909047006","909047007",
+      "909047008","909047009","909047010","909047011","909047012","909047013","909047015","909047016","909047017","909047018",
+      "909047019","909048001","909048002","909048003","909048004","909048005","909048006","909048007","909048008","909048009",
+      "909048010","909048011","909048012","909048013","909048014","909048015","909048016","909048017","909048018","909049001",
+      "909049002","909049003","909049004","909049005","909049006","909049007","909049008","909049009","909049010","909049011",
+      "909049012","909049013","909049014","909049015","909049016","909049017","909049018","909049019","909049020","909049021",
+      "909050002","909050003","909050004","909050005","909050006","909050008","909050009","909050010","909050011","909050012",
+      "909050013","909050014","909050015","909050016","909050017","909050018","909050019","909050020","909050021","909050026",
+      "909050027","909050028","909050029","909050030","909051001","909051002","909051003","909051004","909051005","909051006",
+      "909051007","909051008","909051009","909051010","909051011","909051012","909051013","909051014","909051015","909051016",
+      "909051017","909051018","909051019","909051020","909051021","909051022","909051023","909052001","909052002","909052003",
+      "909052004","909052005","909052006","909052007","909052008","909052009","909052010","909052011","909052012","909052013",
+      "909052014","909052015","909052016","909052021","909053001","909053002","909053003","909053004","909053005","909053006",
+      "909053007","909053008","909053009","909053010","909053011","909053012","909053013","909053014","909053015"
+    ];
+
+    const translations = {
+      ar: {
+        labelTeamCode: 'كود الغرفة', descTeamCode: 'مطلوب للترقيص', labelUid: 'إضافة لاعبين (UID)',
+        squadTitle: 'فتح سكواد 5', emoteGridTitle: 'اضغط على الإيموت للتنفيذ',
+        emoteHint: 'سيتم التنفيذ فوراً بعد الضغط (تأكد من كود الغرفة واللاعبين)',
+        apiStatusText: 'حالة API:', searchPlaceholder: '🔍 بحث برقم الإيموت...',
+        teamPlaceholder: 'مثال: ABCD12', uidPlaceholder: 'مثال: 4715293379', squadPlaceholder: 'UID اللاعب',
+        addBtn: 'إضافة', alertFill: 'يجب إدخال كود الغرفة وإضافة لاعب واحد على الأقل',
+        executing: '⏳ جاري تنفيذ الإيموت', successEmote: '✅ تم الترقـيـص بنجاح!',
+        successSquad: 'تم إرسال سكواد 5 إلى', errorUid: 'UID يجب أن يكون أرقام فقط',
+        maxUids: 'الحد الأقصى 5 لاعبين', alreadyAdded: 'اللاعب مضاف مسبقاً',
+        online: '● متصل', offline: '● غير متصل'
+      },
+      en: {
+        labelTeamCode: 'Room Code', descTeamCode: 'Required for emote', labelUid: 'Add Players (UID)',
+        squadTitle: 'Open Squad 5', emoteGridTitle: 'Tap on emote to execute',
+        emoteHint: 'Instant execution – ensure room code and players added',
+        apiStatusText: 'API Status:', searchPlaceholder: '🔍 Search by ID...',
+        teamPlaceholder: 'e.g., ABCD12', uidPlaceholder: 'e.g., 4715293379', squadPlaceholder: 'Player UID',
+        addBtn: 'Add', alertFill: 'Please enter room code and add at least one player',
+        executing: '⏳ Executing emote', successEmote: '✅ Emote executed successfully!',
+        successSquad: 'Squad 5 sent to', errorUid: 'UID must be numbers only',
+        maxUids: 'Maximum 5 players', alreadyAdded: 'Player already added',
+        online: '● Online', offline: '● Offline'
+      }
+    };
+
+    function detectLanguage() {
+      const browserLang = navigator.language || navigator.userLanguage;
+      return browserLang.startsWith('ar') ? 'ar' : 'en';
+    }
+    let currentLang = detectLanguage();
+    const uidsList = new Set();
+
+    const teamCodeInput = document.getElementById('teamCode');
+    const uidInput = document.getElementById('uidInput');
+    const addUidBtn = document.getElementById('addUidBtn');
+    const uidListContainer = document.getElementById('uidListContainer');
+    const uidCountMessage = document.getElementById('uidCountMessage');
+    const emoteGrid = document.getElementById('emoteGrid');
+    const emoteSearch = document.getElementById('emoteSearch');
+    const alertBox = document.getElementById('alertBox');
+    const squadUidInput = document.getElementById('squadUidInput');
+    const sendSquadBtn = document.getElementById('sendSquadBtn');
+    const apiStatusSpan = document.getElementById('apiStatus');
+    
+    const labelTeamCode = document.getElementById('labelTeamCode');
+    const descTeamCode = document.getElementById('descTeamCode');
+    const labelUid = document.getElementById('labelUid');
+    const squadTitle = document.getElementById('squadTitle');
+    const emoteGridTitle = document.getElementById('emoteGridTitle');
+    const emoteHint = document.getElementById('emoteHint');
+    const apiStatusText = document.getElementById('apiStatusText');
+
+    function applyLanguage(lang) {
+      const t = translations[lang];
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      labelTeamCode.innerHTML = `<i class="fas fa-door-open ml-2 text-[#d4af37]"></i>${t.labelTeamCode}`;
+      descTeamCode.textContent = t.descTeamCode;
+      labelUid.innerHTML = `<i class="fas fa-user-plus ml-2 text-[#d4af37]"></i>${t.labelUid}`;
+      squadTitle.textContent = t.squadTitle;
+      emoteGridTitle.innerHTML = `<i class="fas fa-smile-wink"></i> ${t.emoteGridTitle}`;
+      emoteHint.innerHTML = `<i class="fas fa-info-circle"></i> ${t.emoteHint}`;
+      apiStatusText.innerHTML = `${t.apiStatusText} <span id="apiStatus" class="text-[#4ade80]">${t.online}</span>`;
+      teamCodeInput.placeholder = t.teamPlaceholder;
+      uidInput.placeholder = t.uidPlaceholder;
+      squadUidInput.placeholder = t.squadPlaceholder;
+      emoteSearch.placeholder = t.searchPlaceholder;
+      addUidBtn.innerHTML = `<i class="fas fa-plus-circle"></i> ${t.addBtn}`;
+      window.apiStatusSpan = document.getElementById('apiStatus');
+      updateUidDisplay();
+    }
+
+    function showAlert(message, type = 'info') {
+      alertBox.className = 'rounded-2xl p-4 text-sm font-medium border-l-4 transition-all duration-300';
+      if (type === 'success') alertBox.classList.add('bg-green-900/80', 'border-green-400', 'text-green-100', 'backdrop-blur');
+      else if (type === 'error') alertBox.classList.add('bg-red-900/80', 'border-red-400', 'text-red-100', 'backdrop-blur');
+      else alertBox.classList.add('bg-blue-900/80', 'border-blue-400', 'text-blue-100', 'backdrop-blur');
+      alertBox.innerHTML = `<div class="flex items-center gap-2"><i class="fas fa-${type==='success'?'check-circle':(type==='error'?'exclamation-triangle':'info-circle')}"></i> ${message}</div>`;
+      alertBox.classList.remove('hidden');
+      setTimeout(() => alertBox.classList.add('hidden'), 6000);
+    }
+
+    function updateUidDisplay() {
+      uidListContainer.innerHTML = '';
+      Array.from(uidsList).forEach(uid => {
+        const badge = document.createElement('span');
+        badge.className = 'uid-badge';
+        badge.innerHTML = `${uid} <i class="fas fa-times-circle text-red-400 hover:text-red-300 cursor-pointer" data-uid="${uid}"></i>`;
+        uidListContainer.appendChild(badge);
+      });
+      document.querySelectorAll('[data-uid]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          const uid = e.currentTarget.getAttribute('data-uid');
+          uidsList.delete(uid);
+          updateUidDisplay();
+        });
+      });
+      const t = translations[currentLang];
+      uidCountMessage.textContent = `${uidsList.size} / ${MAX_UIDS} ${currentLang==='ar'?'لاعبين':'players'}`;
+    }
+
+    function addUid(uidStr) {
+      const t = translations[currentLang];
+      const uid = uidStr.trim();
+      if (!uid) return showAlert(t.alertFill, 'error');
+      if (!/^\d+$/.test(uid)) return showAlert(t.errorUid, 'error');
+      if (uidsList.size >= MAX_UIDS) return showAlert(t.maxUids, 'error');
+      if (uidsList.has(uid)) return showAlert(t.alreadyAdded, 'info');
+      uidsList.add(uid);
+      updateUidDisplay();
+      uidInput.value = '';
+      uidInput.focus();
+    }
+
+    function canExecute() {
+      return teamCodeInput.value.trim().length >= 4 && uidsList.size > 0;
+    }
+
+    async function executeEmote(emoteId) {
+      const t = translations[currentLang];
+      const teamCode = teamCodeInput.value.trim();
+      const uids = Array.from(uidsList);
+      if (!canExecute()) {
+        showAlert(t.alertFill, 'error');
+        return;
+      }
+      emoteGrid.style.pointerEvents = 'none';
+      showAlert(`${t.executing} ${emoteId}...`, 'info');
+      try {
+        const params = new URLSearchParams();
+        params.append('team', teamCode);
+        uids.forEach(uid => params.append('uid', uid));
+        params.append('emote', emoteId);
+        const url = `${API_BASE}/emote?${params.toString()}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        if (response.ok && data.success) {
+          showAlert(t.successEmote, 'success');
+        } else {
+          throw new Error(data.error || 'Request failed');
+        }
+      } catch (err) {
+        showAlert(`❌ ${err.message}`, 'error');
+      } finally {
+        emoteGrid.style.pointerEvents = '';
+      }
+    }
+
+    // --- آلية تحميل الصورة مع fallback متعدد (CDN ثم محلي) ---
+    function loadImageWithFallback(id, imgElement) {
+      // المحاولة الأولى: CDN
+      imgElement.src = CDN_BASE + id + '.png';
+      imgElement.crossOrigin = 'anonymous';
+      
+      imgElement.onerror = function() {
+        // إذا فشل CDN، نجرب المسار المحلي
+        this.onerror = function() {
+          // إذا فشل المحلي أيضاً، نعرض أيقونة افتراضية
+          const parent = this.parentNode;
+          if (parent) {
+            const fallback = document.createElement('div');
+            fallback.className = 'fallback-icon';
+            fallback.innerHTML = '<i class="fas fa-image"></i>';
+            parent.appendChild(fallback);
+          }
+          this.remove();
+        };
+        this.src = LOCAL_BASE + id + '.png';
+      };
+    }
+
+    function preloadEmoteImages() {
+      // تحميل مسبق من كلا المصدرين لضمان توفرها
+      emoteIds.forEach(id => {
+        const img = new Image();
+        img.src = CDN_BASE + id + '.png';
+      });
+    }
+
+    function renderEmotes(filterText = '') {
+      const filterLower = filterText.toLowerCase();
+      const filtered = emoteIds.filter(id => id.includes(filterText));
+      emoteGrid.innerHTML = '';
+      filtered.forEach(id => {
+        const div = document.createElement('div');
+        div.className = 'emote-item';
+        div.setAttribute('data-id', id);
+        
+        const img = new Image();
+        img.alt = id;
+        img.loading = 'lazy';
+        loadImageWithFallback(id, img);
+        
+        div.addEventListener('click', () => executeEmote(id));
+        div.appendChild(img);
+        emoteGrid.appendChild(div);
+      });
+    }
+
+    async function sendSquad5() {
+      const t = translations[currentLang];
+      const uid = squadUidInput.value.trim();
+      if (!uid || !/^\d+$/.test(uid)) return showAlert(t.errorUid, 'error');
+      sendSquadBtn.disabled = true;
+      sendSquadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      try {
+        const url = `${API_BASE}/squad5?uid=${uid}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        if (response.ok && data.success) {
+          showAlert(`${t.successSquad} ${uid}`, 'success');
+        } else {
+          throw new Error(data.error || 'Failed');
+        }
+      } catch (err) {
+        showAlert(`Error: ${err.message}`, 'error');
+      } finally {
+        sendSquadBtn.disabled = false;
+        sendSquadBtn.innerHTML = '<i class="fas fa-paper-plane"></i>';
+      }
+    }
+
+    async function checkApiStatus() {
+      const t = translations[currentLang];
+      try {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), 3000);
+        await fetch(API_BASE + '/squad5?uid=123', { method: 'HEAD', signal: controller.signal });
+        clearTimeout(id);
+        if (apiStatusSpan) {
+          apiStatusSpan.innerHTML = t.online;
+          apiStatusSpan.className = 'text-green-400';
+        }
+      } catch (e) {
+        if (apiStatusSpan) {
+          apiStatusSpan.innerHTML = t.offline;
+          apiStatusSpan.className = 'text-red-400';
+        }
+      }
+    }
+
+    addUidBtn.addEventListener('click', () => addUid(uidInput.value));
+    uidInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') addUid(uidInput.value); });
+    emoteSearch.addEventListener('input', (e) => renderEmotes(e.target.value));
+    sendSquadBtn.addEventListener('click', sendSquad5);
+
+    function init() {
+      applyLanguage(currentLang);
+      preloadEmoteImages();
+      renderEmotes();
+      updateUidDisplay();
+      checkApiStatus();
+      setInterval(checkApiStatus, 30000);
+    }
+    init();
+  })();
+</script>
+</body>
+          </html>
