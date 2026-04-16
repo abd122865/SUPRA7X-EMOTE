@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
   <title>SUPRA7X · Emote Master</title>
+  <!-- Tailwind + Font Awesome -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -46,7 +47,7 @@
       border-radius: 20px;
       padding: 8px;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.2,0,0,1);
+      transition: all 0.2s;
       border: 2px solid transparent;
       backdrop-filter: blur(4px);
     }
@@ -95,9 +96,9 @@
       transition: all 0.2s;
       box-shadow: 0 8px 20px -5px #d4af3750;
     }
-    .btn-primary:hover { 
-      transform: translateY(-3px); 
-      box-shadow: 0 15px 25px -6px #d4af37; 
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 25px -6px #d4af37;
       background: linear-gradient(145deg, #e6c14a, #c9a020);
     }
     .btn-secondary {
@@ -155,13 +156,13 @@
 
   <!-- الشبكة الرئيسية -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- العمود الأيسر -->
+    <!-- العمود الأيسر: الإعدادات -->
     <div class="space-y-6">
       <div class="glass rounded-3xl p-5">
         <label class="block text-[#d4af37] text-sm font-semibold mb-2" id="labelTeamCode">
           <i class="fas fa-door-open ml-2 text-[#d4af37]"></i>Room Code
         </label>
-        <input type="text" id="teamCode" placeholder="e.g., ABCD12" inputmode="text" class="w-full bg-[#0b1120]/70 border border-[#d4af3760] rounded-2xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-[#d4af37] text-lg uppercase" maxlength="12">
+        <input type="text" id="teamCode" placeholder="e.g., ABCD12" class="w-full bg-[#0b1120]/70 border border-[#d4af3760] rounded-2xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-[#d4af37] text-lg uppercase" maxlength="12">
         <p class="text-xs text-gray-300 mt-2" id="descTeamCode">Required for emote</p>
       </div>
 
@@ -170,7 +171,7 @@
           <i class="fas fa-user-plus ml-2 text-[#d4af37]"></i>Add Players (UID)
         </label>
         <div class="flex gap-2">
-          <input type="text" id="uidInput" placeholder="e.g., 4715293379" inputmode="text" class="flex-1 bg-[#0b1120]/70 border border-[#d4af3760] rounded-2xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-[#d4af37]">
+          <input type="text" id="uidInput" placeholder="e.g., 4715293379" class="flex-1 bg-[#0b1120]/70 border border-[#d4af3760] rounded-2xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-[#d4af37]">
           <button id="addUidBtn" class="btn-primary px-5 py-3 rounded-2xl text-base"><i class="fas fa-plus-circle"></i> Add</button>
         </div>
         <div class="mt-4 min-h-[60px]">
@@ -185,13 +186,13 @@
           <h3 class="text-xl font-bold text-[#f1e9d8]" id="squadTitle">Open Squad 5</h3>
         </div>
         <div class="flex gap-2">
-          <input type="text" id="squadUidInput" placeholder="Player UID" inputmode="text" class="flex-1 bg-[#0b1120]/70 border border-[#d4af3760] rounded-2xl px-4 py-3 text-white">
+          <input type="text" id="squadUidInput" placeholder="Player UID" class="flex-1 bg-[#0b1120]/70 border border-[#d4af3760] rounded-2xl px-4 py-3 text-white">
           <button id="sendSquadBtn" class="btn-secondary px-5 py-3 rounded-2xl"><i class="fas fa-paper-plane"></i></button>
         </div>
       </div>
     </div>
 
-    <!-- العمود الأيمن -->
+    <!-- العمود الأيمن: شبكة الإيموتات -->
     <div class="lg:col-span-2">
       <div class="glass rounded-3xl p-5 h-full flex flex-col">
         <h3 class="text-xl font-bold text-[#d4af37] mb-3 flex items-center gap-2" id="emoteGridTitle">
@@ -204,6 +205,7 @@
     </div>
   </div>
 
+  <!-- تذييل -->
   <div class="mt-8 text-center text-gray-400 text-sm flex justify-center gap-4">
     <span>SUPRA7X © 2025</span>
     <span>|</span>
@@ -215,7 +217,8 @@
   (function(){
     "use strict";
 
-    const API_BASE = 'http://212.227.7.153:11066';
+    // ✅ استخدام المسار المحلي "/api" الذي سيعيد Vercel توجيهه للخادم الحقيقي
+    const API_BASE = '/api';
     const MAX_UIDS = 5;
     const CDN_BASE = 'https://cdn.jsdelivr.net/gh/ShahGCreator/icon@main/PNG/';
     
@@ -402,10 +405,8 @@
         uids.forEach(uid => params.append('uid', uid));
         params.append('emote', emoteId);
         const url = `${API_BASE}/emote?${params.toString()}`;
-        console.log('Fetching:', url);
         const response = await fetch(url);
         const data = await response.json();
-        console.log('Response:', data);
         if (response.ok && data.success) {
           showAlert(t.successEmote, 'success');
         } else {
@@ -479,7 +480,7 @@
       try {
         const controller = new AbortController();
         const id = setTimeout(() => controller.abort(), 3000);
-        await fetch(API_BASE + '/squad5?uid=123', { method: 'HEAD', signal: controller.signal });
+        await fetch(`${API_BASE}/squad5?uid=123`, { method: 'HEAD', signal: controller.signal });
         clearTimeout(id);
         if (apiStatusSpan) {
           apiStatusSpan.innerHTML = t.online;
@@ -509,4 +510,4 @@
   })();
 </script>
 </body>
-  </html>
+</html>
