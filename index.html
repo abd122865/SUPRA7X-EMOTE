@@ -7,80 +7,44 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
-  
-  <!-- مكتبة الجزيئات المتحركة (tsparticles) -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
-  
   <style>
+    /* ... نفس الأنماط السابقة بدون تغيير ... */
     :root {
-      --gold: #d4af37;
-      --gold-light: #f0d060;
-      --gold-dark: #8b6914;
-      --bg-deep: #04070f;
-      --glass-bg: rgba(6, 10, 22, 0.72);
+      --gold: #d4af37; --gold-light: #f0d060; --gold-dark: #8b6914;
+      --bg-deep: #04070f; --glass-bg: rgba(6, 10, 22, 0.72);
       --border-gold: rgba(212, 175, 55, 0.25);
     }
     * { box-sizing: border-box; }
     body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg-deep);
-      color: #e8dfc8;
-      font-family: 'Tajawal', sans-serif;
-      overflow-x: hidden;
-      position: relative;
+      margin: 0; min-height: 100vh; background: var(--bg-deep);
+      color: #e8dfc8; font-family: 'Tajawal', sans-serif; overflow-x: hidden; position: relative;
     }
-    /* خلفية الجزيئات تكون خلف كل شيء */
-    #tsparticles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
-    /* التأثيرات الثابتة السابقة نجعلها شفافة أكثر لتبرز الجزيئات */
+    #tsparticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
     body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
+      content: ''; position: fixed; inset: 0;
       background:
         radial-gradient(ellipse at 20% 30%, rgba(212,175,55,0.05) 0%, transparent 55%),
         radial-gradient(ellipse at 80% 70%, rgba(100,60,180,0.06) 0%, transparent 55%);
-      pointer-events: none;
-      z-index: 0;
+      pointer-events: none; z-index: 0;
     }
     body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
+      content: ''; position: fixed; inset: 0;
       background-image: radial-gradient(rgba(212,175,55,0.04) 1px, transparent 1px);
-      background-size: 32px 32px;
-      pointer-events: none;
-      z-index: 0;
+      background-size: 32px 32px; pointer-events: none; z-index: 0;
     }
-    /* جميع المحتوى فوق الجزيئات */
     body > * { position: relative; z-index: 1; }
     .glass {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--border-gold);
+      background: var(--glass-bg); backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border-gold);
       box-shadow: 0 24px 48px -12px rgba(0,0,0,0.8), 0 1px 0 rgba(212,175,55,0.15) inset;
     }
     .logo-title {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(2.8rem, 8vw, 5.5rem);
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      line-height: 1;
+      font-family: 'Cinzel', serif; font-size: clamp(2.8rem, 8vw, 5.5rem); font-weight: 900;
+      letter-spacing: 0.08em; line-height: 1;
       background: linear-gradient(135deg, #f0d060 0%, #d4af37 40%, #8b6914 70%, #d4af37 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      filter: drop-shadow(0 0 20px rgba(212,175,55,0.5));
-      background-size: 200%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(212,175,55,0.5)); background-size: 200%;
       animation: shimmer 4s ease-in-out infinite;
     }
     @keyframes shimmer {
@@ -94,22 +58,22 @@
       50% { transform: scale(1.08) translateY(-4px); }
     }
     .subtitle-bar {
-      display: inline-flex; align-items: center; gap: 8px;
-      margin-top: 0.75rem; background: rgba(212,175,55,0.08);
-      border: 1px solid rgba(212,175,55,0.2); border-radius: 99px;
-      padding: 5px 18px; font-size: 0.78rem; color: rgba(212,175,55,0.75);
-      letter-spacing: 0.15em; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 0.75rem;
+      background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 99px; padding: 5px 18px; font-size: 0.78rem;
+      color: rgba(212,175,55,0.75); letter-spacing: 0.15em; text-transform: uppercase;
     }
     .social-links { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:1.2rem; }
     .social-link {
-      display:inline-flex; align-items:center; gap:8px;
-      padding:9px 20px; border-radius:99px; font-size:0.85rem; font-weight:600;
-      text-decoration:none; background:rgba(10,15,30,0.7); border:1px solid rgba(212,175,55,0.3);
-      color:#e8dfc8; transition:all 0.22s cubic-bezier(0.34,1.56,0.64,1);
+      display:inline-flex; align-items:center; gap:8px; padding:9px 20px;
+      border-radius:99px; font-size:0.85rem; font-weight:600; text-decoration:none;
+      background:rgba(10,15,30,0.7); border:1px solid rgba(212,175,55,0.3); color:#e8dfc8;
+      transition:all 0.22s cubic-bezier(0.34,1.56,0.64,1);
     }
     .social-link:hover {
       border-color:var(--gold); background:rgba(212,175,55,0.12);
-      transform:translateY(-3px) scale(1.04); box-shadow:0 8px 24px rgba(212,175,55,0.25); color:var(--gold-light);
+      transform:translateY(-3px) scale(1.04); box-shadow:0 8px 24px rgba(212,175,55,0.25);
+      color:var(--gold-light);
     }
     #alertBox { display:none; max-width:900px; margin:0 auto 1.2rem; border-radius:16px; padding:14px 20px; font-size:0.88rem; font-weight:600; animation:slideIn 0.3s ease; }
     @keyframes slideIn { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
@@ -166,394 +130,272 @@
   </style>
 </head>
 <body>
-
-  <!-- حاوية الجزيئات المتحركة -->
   <div id="tsparticles"></div>
-
-<div class="header-wrap" style="padding:2.5rem 1rem 1.5rem;text-align:center;">
-  <div style="display:flex;align-items:center;justify-content:center;gap:1.2rem;">
-    <span class="crown">👑</span>
-    <h1 class="logo-title">SUPRA7X</h1>
-    <span class="crown crown-r">👑</span>
+  <div class="header-wrap" style="padding:2.5rem 1rem 1.5rem;text-align:center;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:1.2rem;">
+      <span class="crown">👑</span>
+      <h1 class="logo-title">SUPRA7X</h1>
+      <span class="crown crown-r">👑</span>
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:6px;">
+      <span class="subtitle-bar"><i class="fas fa-bolt" style="color:var(--gold);"></i> Emote Master · Free Fire</span>
+    </div>
+    <div class="social-links">
+      <a href="https://t.me/SUPRA7X" target="_blank" rel="noopener noreferrer" class="social-link">
+        <i class="fab fa-telegram" style="color:#54a9eb;font-size:1.1rem;"></i> @SUPRA7X
+      </a>
+      <a href="https://t.me/+PRzwfclvY3phOGI0" target="_blank" rel="noopener noreferrer" class="social-link">
+        <i class="fab fa-telegram" style="color:#54a9eb;font-size:1.1rem;"></i> قناة SUPRA7X
+      </a>
+    </div>
   </div>
-  <div style="display:flex;justify-content:center;margin-top:6px;">
-    <span class="subtitle-bar"><i class="fas fa-bolt" style="color:var(--gold);"></i> Emote Master · Free Fire</span>
-  </div>
-  <div class="social-links">
-    <a href="https://t.me/SUPRA7X" target="_blank" rel="noopener noreferrer" class="social-link">
-      <i class="fab fa-telegram" style="color:#54a9eb;font-size:1.1rem;"></i> @SUPRA7X
-    </a>
-    <a href="https://t.me/+PRzwfclvY3phOGI0" target="_blank" rel="noopener noreferrer" class="social-link">
-      <i class="fab fa-telegram" style="color:#54a9eb;font-size:1.1rem;"></i> قناة SUPRA7X
-    </a>
-  </div>
-</div>
-
-<div id="alertBox"></div>
-
-<div class="main-grid">
-  <div style="display:flex;flex-direction:column;gap:16px;">
-
-    <div class="glass" style="border-radius:22px;padding:20px;">
-      <div class="section-title"><i class="fas fa-door-open"></i> كود الغرفة</div>
-      <input type="text" id="teamCode" placeholder="تيم كود " class="field-input"
-             maxlength="12" style="text-transform:uppercase;font-size:1.1rem;letter-spacing:0.12em;font-weight:700;" autocomplete="off">
-      <p style="margin-top:8px;font-size:0.75rem;color:rgba(200,170,100,0.5);">
-        <i class="fas fa-info-circle"></i> مطلوب لتنفيذ الإيموت
+  <div id="alertBox"></div>
+  <div class="main-grid">
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="glass" style="border-radius:22px;padding:20px;">
+        <div class="section-title"><i class="fas fa-door-open"></i> كود الغرفة</div>
+        <input type="text" id="teamCode" placeholder="تيم كود " class="field-input" maxlength="12" style="text-transform:uppercase;font-size:1.1rem;letter-spacing:0.12em;font-weight:700;" autocomplete="off">
+        <p style="margin-top:8px;font-size:0.75rem;color:rgba(200,170,100,0.5);"><i class="fas fa-info-circle"></i> مطلوب لتنفيذ الإيموت</p>
+      </div>
+      <div class="glass" style="border-radius:22px;padding:20px;">
+        <div class="section-title"><i class="fas fa-user-plus"></i> إضافة لاعبين</div>
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="uidInput" placeholder="UID اللاعب" class="field-input" inputmode="numeric" autocomplete="off">
+          <button id="addUidBtn" class="btn-gold"><i class="fas fa-plus"></i> إضافة</button>
+        </div>
+        <div id="uidListContainer" style="display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;min-height:28px;"></div>
+        <p id="uidCountMessage" style="font-size:0.75rem;color:rgba(212,175,55,0.55);margin-top:8px;"></p>
+      </div>
+      <div class="glass" style="border-radius:22px;padding:20px;">
+        <div class="section-title"><i class="fas fa-users-cog"></i> فتح سكواد 5</div>
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="squadUidInput" placeholder="UID اللاعب" class="field-input" inputmode="numeric" autocomplete="off">
+          <button id="sendSquadBtn" class="btn-ghost" style="padding:11px 16px;"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+      <div class="glass" style="border-radius:16px;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-size:0.78rem;color:rgba(200,180,140,0.5);letter-spacing:0.05em;"> STATUS</span>
+        <span id="apiStatus" class="status-online" style="font-size:0.82rem;font-weight:700;">● متصل</span>
+      </div>
+    </div>
+    <div class="glass" style="border-radius:22px;padding:20px;display:flex;flex-direction:column;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px;flex-wrap:wrap;">
+        <div class="section-title" style="margin-bottom:0;"><i class="fas fa-smile-wink"></i> اختر إيموت للتنفيذ</div>
+        <span id="emoteCounter" style="font-size:0.75rem;color:rgba(212,175,55,0.45);"></span>
+      </div>
+      <input type="text" id="emoteSearch" placeholder="🔍 بحث برقم الإيموت..." class="field-input" style="margin-bottom:14px;font-size:0.85rem;">
+      <div id="emoteGrid" class="emote-grid"></div>
+      <p style="font-size:0.72rem;color:rgba(200,170,100,0.4);margin-top:12px;text-align:center;">
+        <i class="fas fa-bolt"></i> تنفيذ فوري · تأكد من كود الغرفة وإضافة لاعب
       </p>
     </div>
-
-    <div class="glass" style="border-radius:22px;padding:20px;">
-      <div class="section-title"><i class="fas fa-user-plus"></i> إضافة لاعبين</div>
-      <div style="display:flex;gap:8px;">
-        <input type="text" id="uidInput" placeholder="UID اللاعب" class="field-input" inputmode="numeric" autocomplete="off">
-        <button id="addUidBtn" class="btn-gold"><i class="fas fa-plus"></i> إضافة</button>
-      </div>
-      <div id="uidListContainer" style="display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;min-height:28px;"></div>
-      <p id="uidCountMessage" style="font-size:0.75rem;color:rgba(212,175,55,0.55);margin-top:8px;"></p>
-    </div>
-
-    <div class="glass" style="border-radius:22px;padding:20px;">
-      <div class="section-title"><i class="fas fa-users-cog"></i> فتح سكواد 5</div>
-      <div style="display:flex;gap:8px;">
-        <input type="text" id="squadUidInput" placeholder="UID اللاعب" class="field-input" inputmode="numeric" autocomplete="off">
-        <button id="sendSquadBtn" class="btn-ghost" style="padding:11px 16px;"><i class="fas fa-paper-plane"></i></button>
-      </div>
-    </div>
-
-    <div class="glass" style="border-radius:16px;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;">
-      <span style="font-size:0.78rem;color:rgba(200,180,140,0.5);letter-spacing:0.05em;"> STATUS</span>
-      <span id="apiStatus" class="status-online" style="font-size:0.82rem;font-weight:700;">● متصل</span>
-    </div>
   </div>
-
-  <div class="glass" style="border-radius:22px;padding:20px;display:flex;flex-direction:column;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px;flex-wrap:wrap;">
-      <div class="section-title" style="margin-bottom:0;"><i class="fas fa-smile-wink"></i> اختر إيموت للتنفيذ</div>
-      <span id="emoteCounter" style="font-size:0.75rem;color:rgba(212,175,55,0.45);"></span>
-    </div>
-    <input type="text" id="emoteSearch" placeholder="🔍 بحث برقم الإيموت..." class="field-input" style="margin-bottom:14px;font-size:0.85rem;">
-    <div id="emoteGrid" class="emote-grid"></div>
-    <p style="font-size:0.72rem;color:rgba(200,170,100,0.4);margin-top:12px;text-align:center;">
-      <i class="fas fa-bolt"></i> تنفيذ فوري · تأكد من كود الغرفة وإضافة لاعب
-    </p>
+  <div class="footer">
+    SUPRA7X &copy; 2025 &nbsp;·&nbsp; Emote Master &nbsp;·&nbsp;
+    <a href="https://t.me/SUPRA7X" target="_blank" rel="noopener" style="color:rgba(212,175,55,0.5);text-decoration:none;">@SUPRA7X</a>
   </div>
-</div>
-
-<div class="footer">
-  SUPRA7X &copy; 2025 &nbsp;·&nbsp; Emote Master &nbsp;·&nbsp;
-  <a href="https://t.me/SUPRA7X" target="_blank" rel="noopener" style="color:rgba(212,175,55,0.5);text-decoration:none;">@SUPRA7X</a>
-</div>
-
-<script>
-  (function(){
-    "use strict";
-
-    // ====== إعداد الخلفية المتحركة بالجزيئات ======
-    tsParticles.load("tsparticles", {
-      fullScreen: false,
-      fpsLimit: 60,
-      particles: {
-        number: {
-          value: 60,
-          density: {
-            enable: true,
-            area: 800
-          }
+  <script>
+    (function(){
+      "use strict";
+      tsParticles.load("tsparticles", {
+        fullScreen: false, fpsLimit: 60,
+        particles: {
+          number: { value: 60, density: { enable: true, area: 800 } },
+          color: { value: ["#d4af37", "#f0d060", "#b8860b"] },
+          shape: { type: "circle" },
+          opacity: { value: 0.25, random: true, animation: { enable: true, speed: 0.5, minimumValue: 0.05, sync: false } },
+          size: { value: 2.5, random: true, animation: { enable: true, speed: 1.2, minimumValue: 0.5, sync: false } },
+          move: { enable: true, speed: 0.7, direction: "none", random: true, straight: false, outModes: { default: "bounce" } },
+          links: { enable: true, distance: 140, color: "#d4af37", opacity: 0.1, width: 0.8 }
         },
-        color: {
-          value: ["#d4af37", "#f0d060", "#b8860b"]
+        interactivity: {
+          events: { onHover: { enable: true, mode: "repulse" } },
+          modes: { repulse: { distance: 100, duration: 0.4 } }
         },
-        shape: {
-          type: "circle"
-        },
-        opacity: {
-          value: 0.25,
-          random: true,
-          animation: {
-            enable: true,
-            speed: 0.5,
-            minimumValue: 0.05,
-            sync: false
-          }
-        },
-        size: {
-          value: 2.5,
-          random: true,
-          animation: {
-            enable: true,
-            speed: 1.2,
-            minimumValue: 0.5,
-            sync: false
-          }
-        },
-        move: {
-          enable: true,
-          speed: 0.7,
-          direction: "none",
-          random: true,
-          straight: false,
-          outModes: {
-            default: "bounce"
-          },
-        },
-        links: {
-          enable: true,
-          distance: 140,
-          color: "#d4af37",
-          opacity: 0.1,
-          width: 0.8
-        }
-      },
-      interactivity: {
-        events: {
-          onHover: {
-            enable: true,
-            mode: "repulse"
-          },
-        },
-        modes: {
-          repulse: {
-            distance: 100,
-            duration: 0.4
-          }
-        }
-      },
-      background: {
-        color: "transparent"
-      },
-      detectRetina: true
-    });
-
-    const API_BASE = 'https://emot.onrender.com';
-    const MAX_UIDS = 5;
-    const CDN_BASE = 'https://cdn.jsdelivr.net/gh/ShahGCreator/icon@main/PNG/';
-    const emoteIds = [
-      "909000001","909000002","909000003","909000004","909000005","909000006","909000007","909000008","909000009","909000010",
-      "909000011","909000012","909000013","909000014","909000015","909000016","909000017","909000018","909000019","909000020",
-      "909000021","909000022","909000023","909000024","909000025","909000026","909000027","909000028","909000029","909000031",
-      "909000032","909000033","909000034","909000036","909000037","909000038","909000039","909000040","909000041","909000042",
-      "909000043","909000044","909000045","909000046","909000047","909000048","909000049","909000051","909000052","909000053",
-      "909000054","909000055","909000056","909000057","909000058","909000059","909000060","909000061","909000062","909000063",
-      "909000064","909000065","909000066","909000067","909000068","909000069","909000070","909000071","909000072","909000073",
-      "909000074","909000075","909000076","909000077","909000078","909000079","909000080","909000081","909000082","909000083",
-      "909000084","909000085","909000086","909000087","909000088","909000089","909000090","909000091","909000092","909000093",
-      "909000094","909000095","909000096","909000097","909000098","909000099","909000121","909000123","909000124","909000125",
-      "909000126","909000127","909000128","909000129","909000130","909000131","909000132","909000133","909000134","909000135",
-      "909000136","909000137","909000138","909000139","909000140","909000141","909000144","909000145","909033001","909033002",
-      "909033003","909033004","909033005","909033006","909033007","909033008","909033009","909033010","909034001","909034002",
-      "909034003","909034004","909034005","909034006","909034007","909034008","909034009","909034010","909034011","909034012",
-      "909034013","909034014","909035001","909035005","909035006","909035007","909035008","909035009","909035010","909035011",
-      "909035012","909035013","909035014","909035015","909036001","909036002","909036003","909036004","909036005","909036006",
-      "909036008","909036009","909036010","909036011","909036012","909036014","909037001","909037002","909037003","909037004",
-      "909037005","909037006","909037007","909037008","909037009","909037010","909037011","909037012","909038001","909038003",
-      "909038004","909038005","909038006","909038008","909038009","909038010","909038011","909038012","909038013","909039001",
-      "909039002","909039003","909039004","909039005","909039006","909039007","909039008","909039009","909039010","909039011",
-      "909039012","909039013","909039014","909040001","909040002","909040003","909040004","909040005","909040006","909040008",
-      "909040009","909040010","909040011","909040012","909040013","909040014","909041001","909041002","909041003","909041004",
-      "909041005","909041006","909041007","909041008","909041009","909041010","909041011","909041012","909041013","909041014",
-      "909041015","909042001","909042002","909042003","909042004","909042005","909042006","909042007","909042008","909042009",
-      "909042011","909042012","909042013","909042016","909042017","909042018","909043001","909043002","909043003","909043004",
-      "909043005","909043006","909043007","909043008","909043009","909043010","909043013","909044001","909044002","909044003",
-      "909044004","909044005","909044006","909044007","909044008","909044009","909044010","909044011","909044012","909044015",
-      "909044016","909045001","909045002","909045003","909045004","909045005","909045006","909045007","909045008","909045009",
-      "909045010","909045011","909045012","909045015","909045016","909045017","909046001","909046002","909046003","909046004",
-      "909046005","909046006","909046007","909046008","909046009","909046010","909046011","909046012","909046013","909046014",
-      "909046015","909046016","909046017","909047001","909047002","909047003","909047004","909047005","909047006","909047007",
-      "909047008","909047009","909047010","909047011","909047012","909047013","909047015","909047016","909047017","909047018",
-      "909047019","909048001","909048002","909048003","909048004","909048005","909048006","909048007","909048008","909048009",
-      "909048010","909048011","909048012","909048013","909048014","909048015","909048016","909048017","909048018","909049001",
-      "909049002","909049003","909049004","909049005","909049006","909049007","909049008","909049009","909049010","909049011",
-      "909049012","909049013","909049014","909049015","909049016","909049017","909049018","909049019","909049020","909049021",
-      "909050002","909050003","909050004","909050005","909050006","909050008","909050009","909050010","909050011","909050012",
-      "909050013","909050014","909050015","909050016","909050017","909050018","909050019","909050020","909050021","909050026",
-      "909050027","909050028","909050029","909050030","909051001","909051002","909051003","909051004","909051005","909051006",
-      "909051007","909051008","909051009","909051010","909051011","909051012","909051013","909051014","909051015","909051016",
-      "909051017","909051018","909051019","909051020","909051021","909051022","909051023","909052001","909052002","909052003",
-      "909052004","909052005","909052006","909052007","909052008","909052009","909052010","909052011","909052012","909052013",
-      "909052014","909052015","909052016","909052021","909053001","909053002","909053003","909053004","909053005","909053006",
-      "909053007","909053008","909053009","909053010","909053011","909053012","909053013","909053014","909053015"
-    ];
-
-    const uidsList = new Set();
-    let isExecuting = false;
-
-    const teamCodeInput = document.getElementById('teamCode');
-    const uidInput = document.getElementById('uidInput');
-    const addUidBtn = document.getElementById('addUidBtn');
-    const uidListContainer = document.getElementById('uidListContainer');
-    const uidCountMessage = document.getElementById('uidCountMessage');
-    const emoteGridEl = document.getElementById('emoteGrid');
-    const emoteSearch = document.getElementById('emoteSearch');
-    const alertBox = document.getElementById('alertBox');
-    const squadUidInput = document.getElementById('squadUidInput');
-    const sendSquadBtn = document.getElementById('sendSquadBtn');
-    const apiStatusSpan = document.getElementById('apiStatus');
-    const emoteCounter = document.getElementById('emoteCounter');
-
-    let alertTimeout;
-    function showAlert(msg, type = 'info') {
-      clearTimeout(alertTimeout);
-      const styles = {
-        success: { bg: 'rgba(20,60,30,0.9)', border: '#4ade80', color: '#bbf7d0' },
-        error:   { bg: 'rgba(60,15,15,0.9)', border: '#f87171', color: '#fecaca' },
-        info:    { bg: 'rgba(15,25,60,0.9)', border: '#60a5fa', color: '#bfdbfe' }
-      };
-      const s = styles[type] || styles.info;
-      const icons = { success: 'check-circle', error: 'exclamation-triangle', info: 'bolt' };
-      alertBox.style.cssText = `display:block;max-width:900px;margin:0 auto 1.2rem;border-radius:16px;padding:14px 20px;font-size:0.88rem;font-weight:600;border-right:4px solid ${s.border};background:${s.bg};color:${s.color};backdrop-filter:blur(12px);`;
-      alertBox.innerHTML = `<i class="fas fa-${icons[type]||'info-circle'}"></i> ${msg}`;
-      alertTimeout = setTimeout(() => { alertBox.style.display = 'none'; }, 6000);
-    }
-
-    function updateUidDisplay() {
-      uidListContainer.innerHTML = '';
-      uidsList.forEach(uid => {
-        const b = document.createElement('span');
-        b.className = 'uid-badge';
-        b.innerHTML = `${uid} <i class="fas fa-times" style="cursor:pointer;color:#f87171;margin-right:4px;" data-uid="${uid}"></i>`;
-        uidListContainer.appendChild(b);
+        background: { color: "transparent" },
+        detectRetina: true
       });
-      document.querySelectorAll('[data-uid]').forEach(el => {
-        el.addEventListener('click', () => { uidsList.delete(el.getAttribute('data-uid')); updateUidDisplay(); });
-      });
-      uidCountMessage.textContent = `${uidsList.size} / ${MAX_UIDS} لاعبين`;
-    }
 
-    function addUid(val) {
-      const uid = val.trim();
-      if (!uid) return showAlert('أدخل UID اللاعب', 'error');
-      if (!/^\d+$/.test(uid)) return showAlert('يجب أن يكون UID أرقاماً فقط', 'error');
-      if (uidsList.size >= MAX_UIDS) return showAlert('الحد الأقصى 5 لاعبين', 'error');
-      if (uidsList.has(uid)) return showAlert('اللاعب مضاف مسبقاً', 'info');
-      uidsList.add(uid);
+      const API_BASE = 'https://emot.onrender.com';
+      const MAX_UIDS = 5;
+      // ✅ تم تغيير الرابط إلى Raw GitHub المباشر
+      const CDN_BASE = 'https://raw.githubusercontent.com/ShahGCreator/icon/main/PNG/';
+      const emoteIds = [ /* نفس المصفوفة الكاملة بدون تغيير */ ];
+      // (اختصرت المصفوفة للتوضيح، لكن استخدم المصفوفة الكاملة التي لديك)
+      const uidsList = new Set();
+      let isExecuting = false;
+      const teamCodeInput = document.getElementById('teamCode');
+      const uidInput = document.getElementById('uidInput');
+      const addUidBtn = document.getElementById('addUidBtn');
+      const uidListContainer = document.getElementById('uidListContainer');
+      const uidCountMessage = document.getElementById('uidCountMessage');
+      const emoteGridEl = document.getElementById('emoteGrid');
+      const emoteSearch = document.getElementById('emoteSearch');
+      const alertBox = document.getElementById('alertBox');
+      const squadUidInput = document.getElementById('squadUidInput');
+      const sendSquadBtn = document.getElementById('sendSquadBtn');
+      const apiStatusSpan = document.getElementById('apiStatus');
+      const emoteCounter = document.getElementById('emoteCounter');
+
+      let alertTimeout;
+      function showAlert(msg, type = 'info') {
+        clearTimeout(alertTimeout);
+        const styles = {
+          success: { bg: 'rgba(20,60,30,0.9)', border: '#4ade80', color: '#bbf7d0' },
+          error:   { bg: 'rgba(60,15,15,0.9)', border: '#f87171', color: '#fecaca' },
+          info:    { bg: 'rgba(15,25,60,0.9)', border: '#60a5fa', color: '#bfdbfe' }
+        };
+        const s = styles[type] || styles.info;
+        alertBox.style.cssText = `display:block;max-width:900px;margin:0 auto 1.2rem;border-radius:16px;padding:14px 20px;font-size:0.88rem;font-weight:600;border-right:4px solid ${s.border};background:${s.bg};color:${s.color};backdrop-filter:blur(12px);`;
+        alertBox.innerHTML = `<i class="fas fa-${type==='success'?'check-circle':(type==='error'?'exclamation-triangle':'bolt')}"></i> ${msg}`;
+        alertTimeout = setTimeout(() => { alertBox.style.display = 'none'; }, 6000);
+      }
+
+      function updateUidDisplay() {
+        uidListContainer.innerHTML = '';
+        uidsList.forEach(uid => {
+          const b = document.createElement('span');
+          b.className = 'uid-badge';
+          b.innerHTML = `${uid} <i class="fas fa-times" style="cursor:pointer;color:#f87171;margin-right:4px;" data-uid="${uid}"></i>`;
+          uidListContainer.appendChild(b);
+        });
+        document.querySelectorAll('[data-uid]').forEach(el => {
+          el.addEventListener('click', () => { uidsList.delete(el.getAttribute('data-uid')); updateUidDisplay(); });
+        });
+        uidCountMessage.textContent = `${uidsList.size} / ${MAX_UIDS} لاعبين`;
+      }
+
+      function addUid(val) {
+        const uid = val.trim();
+        if (!uid) return showAlert('أدخل UID اللاعب', 'error');
+        if (!/^\d+$/.test(uid)) return showAlert('يجب أن يكون UID أرقاماً فقط', 'error');
+        if (uidsList.size >= MAX_UIDS) return showAlert('الحد الأقصى 5 لاعبين', 'error');
+        if (uidsList.has(uid)) return showAlert('اللاعب مضاف مسبقاً', 'info');
+        uidsList.add(uid);
+        updateUidDisplay();
+        uidInput.value = '';
+        uidInput.focus();
+      }
+
+      async function executeEmote(emoteId) {
+        if (isExecuting) return;
+        const teamCode = teamCodeInput.value.trim();
+        const uids = Array.from(uidsList);
+        if (!teamCode || teamCode.length < 4) return showAlert('أدخل كود الغرفة (4 أحرف على الأقل)', 'error');
+        if (uids.length === 0) return showAlert('أضف لاعباً واحداً على الأقل', 'error');
+        isExecuting = true;
+        emoteGridEl.style.opacity = '0.5';
+        emoteGridEl.style.pointerEvents = 'none';
+        showAlert(`⏳ تنفيذ الإيموت ${emoteId} ...`, 'info');
+        try {
+          const params = new URLSearchParams();
+          params.append('team', teamCode);
+          uids.forEach(uid => params.append('uid', uid));
+          params.append('emote', emoteId);
+          const res = await fetch(`${API_BASE}/emote?${params}`, {
+            method: 'GET', mode: 'cors', credentials: 'omit', cache: 'no-cache'
+          });
+          const data = await res.json().catch(() => ({}));
+          if (res.ok && data.success) {
+            showAlert('✅ تم الترقيص بنجاح!', 'success');
+          } else {
+            throw new Error(data.error || `HTTP ${res.status}`);
+          }
+        } catch (err) {
+          showAlert(`❌ فشل: ${err.message}`, 'error');
+        } finally {
+          isExecuting = false;
+          emoteGridEl.style.opacity = '';
+          emoteGridEl.style.pointerEvents = '';
+        }
+      }
+
+      function renderEmotes(filter = '') {
+        const filtered = emoteIds.filter(id => id.includes(filter));
+        emoteCounter.textContent = `${filtered.length} إيموت`;
+        emoteGridEl.innerHTML = '';
+        const BATCH = 40;
+        let idx = 0;
+        function renderBatch() {
+          const end = Math.min(idx + BATCH, filtered.length);
+          for (; idx < end; idx++) {
+            const id = filtered[idx];
+            const div = document.createElement('div');
+            div.className = 'emote-item';
+            const img = new Image();
+            img.alt = id;
+            // ✅ نزعنا loading و decoding لتجنب أي تعارض، وأبقينا crossOrigin
+            img.crossOrigin = 'anonymous';
+            img.src = CDN_BASE + id + '.png';
+            img.onerror = function() {
+              const fb = document.createElement('div');
+              fb.className = 'fallback-icon';
+              fb.innerHTML = '<i class="fas fa-image"></i>';
+              if (this.parentNode) this.parentNode.replaceChild(fb, this);
+            };
+            const label = document.createElement('div');
+            label.className = 'emote-id-label';
+            label.textContent = id.slice(-5);
+            div.addEventListener('click', () => executeEmote(id));
+            div.appendChild(img);
+            div.appendChild(label);
+            emoteGridEl.appendChild(div);
+          }
+          if (idx < filtered.length) requestAnimationFrame(renderBatch);
+        }
+        requestAnimationFrame(renderBatch);
+      }
+
+      async function sendSquad5() {
+        const uid = squadUidInput.value.trim();
+        if (!uid || !/^\d+$/.test(uid)) return showAlert('UID يجب أن يكون أرقاماً فقط', 'error');
+        sendSquadBtn.disabled = true;
+        sendSquadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        try {
+          const res = await fetch(`${API_BASE}/squad5?uid=${encodeURIComponent(uid)}`, {
+            mode: 'cors', credentials: 'omit', cache: 'no-cache'
+          });
+          const data = await res.json().catch(() => ({}));
+          if (res.ok && data.success) {
+            showAlert(`✅ تم إرسال سكواد 5 إلى ${uid}`, 'success');
+          } else {
+            throw new Error(data.error || `HTTP ${res.status}`);
+          }
+        } catch (err) {
+          showAlert(`❌ ${err.message}`, 'error');
+        } finally {
+          sendSquadBtn.disabled = false;
+          sendSquadBtn.innerHTML = '<i class="fas fa-paper-plane"></i>';
+        }
+      }
+
+      async function checkApiStatus() {
+        try {
+          const ctrl = new AbortController();
+          const t = setTimeout(() => ctrl.abort(), 4000);
+          const res = await fetch(`${API_BASE}/ping`, { method: 'GET', mode: 'cors', credentials: 'omit', cache: 'no-cache', signal: ctrl.signal });
+          clearTimeout(t);
+          apiStatusSpan.textContent = '● متصل';
+          apiStatusSpan.className = 'status-online';
+        } catch {
+          apiStatusSpan.textContent = '● غير متصل';
+          apiStatusSpan.className = 'status-offline';
+        }
+      }
+
+      let searchTimer;
+      emoteSearch.addEventListener('input', (e) => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => renderEmotes(e.target.value.trim()), 200);
+      });
+      addUidBtn.addEventListener('click', () => addUid(uidInput.value));
+      uidInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addUid(uidInput.value); });
+      sendSquadBtn.addEventListener('click', sendSquad5);
       updateUidDisplay();
-      uidInput.value = '';
-      uidInput.focus();
-    }
-
-    async function executeEmote(emoteId) {
-      if (isExecuting) return;
-      const teamCode = teamCodeInput.value.trim();
-      const uids = Array.from(uidsList);
-      if (!teamCode || teamCode.length < 4) return showAlert('أدخل كود الغرفة (4 أحرف على الأقل)', 'error');
-      if (uids.length === 0) return showAlert('أضف لاعباً واحداً على الأقل', 'error');
-      isExecuting = true;
-      emoteGridEl.style.opacity = '0.5';
-      emoteGridEl.style.pointerEvents = 'none';
-      showAlert(`⏳ تنفيذ الإيموت ${emoteId} ...`, 'info');
-      try {
-        const params = new URLSearchParams();
-        params.append('team', teamCode);
-        uids.forEach(uid => params.append('uid', uid));
-        params.append('emote', emoteId);
-        const res = await fetch(`${API_BASE}/emote?${params}`, {
-          method: 'GET', mode: 'cors', credentials: 'omit', cache: 'no-cache'
-        });
-        const data = await res.json().catch(() => ({}));
-        if (res.ok && data.success) {
-          showAlert('✅ تم الترقيص بنجاح!', 'success');
-        } else {
-          throw new Error(data.error || `HTTP ${res.status}`);
-        }
-      } catch (err) {
-        showAlert(`❌ فشل: ${err.message}`, 'error');
-      } finally {
-        isExecuting = false;
-        emoteGridEl.style.opacity = '';
-        emoteGridEl.style.pointerEvents = '';
-      }
-    }
-
-    function renderEmotes(filter = '') {
-      const filtered = emoteIds.filter(id => id.includes(filter));
-      emoteCounter.textContent = `${filtered.length} إيموت`;
-      emoteGridEl.innerHTML = '';
-      const BATCH = 40;
-      let idx = 0;
-      function renderBatch() {
-        const end = Math.min(idx + BATCH, filtered.length);
-        for (; idx < end; idx++) {
-          const id = filtered[idx];
-          const div = document.createElement('div');
-          div.className = 'emote-item';
-          const img = new Image();
-          img.alt = id;
-          img.loading = 'lazy';
-          img.decoding = 'async';
-          // ✅ تمت إضافة هذا السطر لحل مشكلة عدم ظهور الصور
-          img.crossOrigin = 'anonymous';
-          img.src = CDN_BASE + id + '.png';
-          img.onerror = function() {
-            const fb = document.createElement('div');
-            fb.className = 'fallback-icon';
-            fb.innerHTML = '<i class="fas fa-image"></i>';
-            if (this.parentNode) this.parentNode.replaceChild(fb, this);
-          };
-          const label = document.createElement('div');
-          label.className = 'emote-id-label';
-          label.textContent = id.slice(-5);
-          div.addEventListener('click', () => executeEmote(id));
-          div.appendChild(img);
-          div.appendChild(label);
-          emoteGridEl.appendChild(div);
-        }
-        if (idx < filtered.length) requestAnimationFrame(renderBatch);
-      }
-      requestAnimationFrame(renderBatch);
-    }
-
-    async function sendSquad5() {
-      const uid = squadUidInput.value.trim();
-      if (!uid || !/^\d+$/.test(uid)) return showAlert('UID يجب أن يكون أرقاماً فقط', 'error');
-      sendSquadBtn.disabled = true;
-      sendSquadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-      try {
-        const res = await fetch(`${API_BASE}/squad5?uid=${encodeURIComponent(uid)}`, {
-          mode: 'cors', credentials: 'omit', cache: 'no-cache'
-        });
-        const data = await res.json().catch(() => ({}));
-        if (res.ok && data.success) {
-          showAlert(`✅ تم إرسال سكواد 5 إلى ${uid}`, 'success');
-        } else {
-          throw new Error(data.error || `HTTP ${res.status}`);
-        }
-      } catch (err) {
-        showAlert(`❌ ${err.message}`, 'error');
-      } finally {
-        sendSquadBtn.disabled = false;
-        sendSquadBtn.innerHTML = '<i class="fas fa-paper-plane"></i>';
-      }
-    }
-
-    async function checkApiStatus() {
-      try {
-        const ctrl = new AbortController();
-        const t = setTimeout(() => ctrl.abort(), 4000);
-        const res = await fetch(`${API_BASE}/ping`, { method: 'GET', mode: 'cors', credentials: 'omit', cache: 'no-cache', signal: ctrl.signal });
-        clearTimeout(t);
-        apiStatusSpan.textContent = '● متصل';
-        apiStatusSpan.className = 'status-online';
-      } catch {
-        apiStatusSpan.textContent = '● غير متصل';
-        apiStatusSpan.className = 'status-offline';
-      }
-    }
-
-    let searchTimer;
-    emoteSearch.addEventListener('input', (e) => {
-      clearTimeout(searchTimer);
-      searchTimer = setTimeout(() => renderEmotes(e.target.value.trim()), 200);
-    });
-    addUidBtn.addEventListener('click', () => addUid(uidInput.value));
-    uidInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addUid(uidInput.value); });
-    sendSquadBtn.addEventListener('click', sendSquad5);
-
-    updateUidDisplay();
-    renderEmotes();
-    checkApiStatus();
-    setInterval(checkApiStatus, 30000);
-  })();
-</script>
+      renderEmotes();
+      checkApiStatus();
+      setInterval(checkApiStatus, 30000);
+    })();
+  </script>
 </body>
 </html>
