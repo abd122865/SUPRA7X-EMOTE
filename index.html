@@ -251,7 +251,7 @@
 
     // ====== إعداد الخلفية المتحركة بالجزيئات ======
     tsParticles.load("tsparticles", {
-      fullScreen: false, // نتحكم بيدوياً
+      fullScreen: false,
       fpsLimit: 60,
       particles: {
         number: {
@@ -481,6 +481,8 @@
           img.alt = id;
           img.loading = 'lazy';
           img.decoding = 'async';
+          // ✅ تمت إضافة هذا السطر لحل مشكلة عدم ظهور الصور
+          img.crossOrigin = 'anonymous';
           img.src = CDN_BASE + id + '.png';
           img.onerror = function() {
             const fb = document.createElement('div');
