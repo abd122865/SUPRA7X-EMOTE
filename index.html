@@ -112,7 +112,6 @@
     .emote-grid::-webkit-scrollbar-track{background:rgba(10,14,26,0.5);border-radius:10px;}
     .emote-grid::-webkit-scrollbar-thumb{background:rgba(212,175,55,0.4);border-radius:10px;}
     
-    /* نمط جديد لحاوية الإيموت يستخدم div بدلاً من img */
     .emote-item {
       background:rgba(10,14,26,0.6); border-radius:16px; padding:7px; cursor:pointer;
       transition:all 0.18s cubic-bezier(0.34,1.56,0.64,1); border:1.5px solid rgba(212,175,55,0.1);
@@ -121,16 +120,14 @@
     .emote-item:hover{border-color:rgba(212,175,55,0.6);transform:translateY(-3px) scale(1.04);box-shadow:0 8px 24px rgba(212,175,55,0.2);}
     .emote-item:active{transform:scale(0.96);}
     
-    /* الصندوق الذي يحوي الصورة (خلفية) */
-    .emote-image {
+    /* تعديل: استخدام img مباشرة */
+    .emote-item img {
       width: 100%;
       aspect-ratio: 1/1;
       border-radius: 10px;
       background-color: #060a14;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center center;
       display: block;
+      object-fit: contain;
     }
     
     .fallback-icon{
@@ -381,48 +378,35 @@
         const filtered = emoteIds.filter(id => id.includes(filter));
         emoteCounter.textContent = `${filtered.length} إيموت`;
         emoteGridEl.innerHTML = '';
-        const BATCH = 40;
-        let idx = 0;
-        function renderBatch() {
-          const end = Math.min(idx + BATCH, filtered.length);
-          for (; idx < end; idx++) {
-            const id = filtered[idx];
-            const div = document.createElement('div');
-            div.className = 'emote-item';
-            
-            // نستخدم div بخلفية الصورة بدلاً من img
-            const imgDiv = document.createElement('div');
-            imgDiv.className = 'emote-image';
-            imgDiv.style.backgroundImage = `url('${CDN_BASE}${id}.png')`;
-            
-            // عند فشل التحميل نعرض أيقونة
-            imgDiv.onerror = function() {
-              // لا يمكن ربط onerror بـ div، لذا سنستخدم طريقة بديلة للكشف عن الخطأ
-              // ولكن يمكننا الاعتماد على fallback بواسطة حدث error للصورة الافتراضية
-            };
-            
-            // إنشاء صورة مخفية لفحص التحميل
-            const testImg = new Image();
-            testImg.src = CDN_BASE + id + '.png';
-            testImg.onerror = function() {
-              // فشل التحميل: نستبدل الـ div بأيقونة
-              imgDiv.className = 'fallback-icon';
-              imgDiv.innerHTML = '<i class="fas fa-image"></i>';
-              imgDiv.style.backgroundImage = 'none';
-            };
-            
-            const label = document.createElement('div');
-            label.className = 'emote-id-label';
-            label.textContent = id.slice(-5);
-            
-            div.addEventListener('click', () => executeEmote(id));
-            div.appendChild(imgDiv);
-            div.appendChild(label);
-            emoteGridEl.appendChild(div);
-          }
-          if (idx < filtered.length) requestAnimationFrame(renderBatch);
-        }
-        requestAnimationFrame(renderBatch);
+        
+        // استخدام img مباشرة مع معالجة الخطأ
+        filtered.forEach(id => {
+          const div = document.createElement('div');
+          div.className = 'emote-item';
+          
+          const img = document.createElement('img');
+          img.alt = id;
+          img.loading = 'lazy';
+          img.crossOrigin = 'anonymous'; // هام لـ CORS
+          img.src = CDN_BASE + id + '.png';
+          
+          img.onerror = function() {
+            // استبدال الصورة بأيقونة
+            const fallback = document.createElement('div');
+            fallback.className = 'fallback-icon';
+            fallback.innerHTML = '<i class="fas fa-image"></i>';
+            this.replaceWith(fallback);
+          };
+          
+          const label = document.createElement('div');
+          label.className = 'emote-id-label';
+          label.textContent = id.slice(-5);
+          
+          div.addEventListener('click', () => executeEmote(id));
+          div.appendChild(img);
+          div.appendChild(label);
+          emoteGridEl.appendChild(div);
+        });
       }
 
       async function sendSquad5() {
@@ -452,8 +436,16 @@
         try {
           const ctrl = new AbortController();
           const t = setTimeout(() => ctrl.abort(), 4000);
-          const res = await fetch(`${API_BASE}/ping`, { method: 'GET', mode: 'cors', credentials: 'omit', cache: 'no-cache', signal: ctrl.signal });
+          // استخدام squad5 للفحص بدلاً من ping غير الموجود
+          const res = await fetch(`${API_BASE}/squad5?uid=123`, { 
+            method: 'GET',
+            mode: 'cors', 
+            credentials: 'omit', 
+            cache: 'no-cache',
+            signal: ctrl.signal 
+          });
           clearTimeout(t);
+          // أي استجابة تعني أن السيرفر متاح
           apiStatusSpan.textContent = '● متصل';
           apiStatusSpan.className = 'status-online';
         } catch {
